@@ -1,0 +1,9 @@
+accuracy,precision,recall,f1,actor,casos_riesgo_alto_reales,advertencia
+1.0,0.0,0.0,0.0,menor de edad,0,muestra pequena
+1.0,0.0,0.0,0.0,no reporto,0,muestra pequena
+0.861,0.323,0.476,0.385,conductor,21,
+0.801,0.593,0.614,0.603,acompanante,57,
+0.879,0.353,0.667,0.462,peaton,18,
+0.736,0.254,0.692,0.371,pasajero,26,
+0.983,0.875,0.7,0.778,ciclista,10,
+0.649,0.594,0.745,0.661,motociclista,106,

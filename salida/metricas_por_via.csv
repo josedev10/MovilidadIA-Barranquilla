@@ -1,0 +1,34 @@
+accuracy,precision,recall,f1,via,casos_riesgo_alto_reales,advertencia
+0.946,0.0,0.0,0.0,calle 19,0,muestra pequena
+0.893,0.0,0.0,0.0,calle 31,0,muestra pequena
+0.911,0.0,0.0,0.0,calle 53,4,muestra pequena
+0.821,0.0,0.0,0.0,calle 80,6,
+0.911,0.0,0.0,0.0,calle 75,1,muestra pequena
+0.839,0.0,0.0,0.0,calle 72,4,muestra pequena
+0.929,0.0,0.0,0.0,calle 70,2,muestra pequena
+0.946,0.0,0.0,0.0,calle 56,2,muestra pequena
+0.893,0.0,0.0,0.0,carrera 44,3,muestra pequena
+0.911,0.0,0.0,0.0,carrera 9,3,muestra pequena
+0.946,0.0,0.0,0.0,carrera 42,2,muestra pequena
+0.964,0.0,0.0,0.0,calle 85,0,muestra pequena
+0.857,0.2,0.2,0.2,calle 76,5,
+0.911,0.333,0.25,0.286,carrera 27,4,muestra pequena
+0.839,0.143,0.25,0.182,carrera 46,4,muestra pequena
+0.768,0.333,0.3,0.316,calle 17,10,
+0.875,0.167,0.333,0.222,carrera 50,3,muestra pequena
+0.839,0.286,0.333,0.308,calle 84,6,
+0.839,0.286,0.333,0.308,carrera 6,6,
+0.911,0.5,0.4,0.444,carrera 8,5,
+0.893,0.333,0.5,0.4,calle 47,4,muestra pequena
+0.893,0.286,0.667,0.4,carrera 14,3,muestra pequena
+0.839,0.364,0.667,0.471,carrera 43,6,
+0.929,0.4,0.667,0.5,calle 68,3,muestra pequena
+0.893,0.556,0.714,0.625,carrera 15,7,
+0.946,0.875,0.778,0.824,carrera 21,9,
+0.679,0.423,0.786,0.55,carrera 38,14,
+0.75,0.538,0.875,0.667,calle 30,16,
+0.732,0.536,0.882,0.667,calle 45,17,
+0.804,0.69,0.909,0.784,calle 110,22,
+0.839,0.692,0.947,0.8,via 40,19,
+0.554,0.194,1.0,0.324,circunvalar,6,
+1.0,1.0,1.0,1.0,otras vias,42,

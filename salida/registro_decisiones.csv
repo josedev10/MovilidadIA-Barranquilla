@@ -1,0 +1,2 @@
+fecha_hora,via,actor,dia,prob_riesgo_alto,clasificacion,version_modelo,validacion_humana
+2026-11-06T22:05:10,calle 110,motociclista,viernes,0.994,RIESGO ALTO,1.0,pendiente

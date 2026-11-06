@@ -1,0 +1,71 @@
+{
+  "nombre": "MovilidadIA Barranquilla - modelo de riesgo vial",
+  "version": "1.0",
+  "fecha_entrenamiento": "2026-11-06T22:05:07",
+  "origen_datos": "Accidentalidad_en_Barranquilla_victimas_20261106 (1).csv",
+  "informe_datos": {
+    "filas_originales": 19666,
+    "filas_validas": 19666,
+    "filas_descartadas_por_datos_incompletos": 0,
+    "duplicados_exactos_detectados": 0,
+    "anios_completos_usados": [
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "anios_parciales_excluidos": [
+      2026
+    ],
+    "filas_en_anios_completos": 18437,
+    "vias_individuales": 32,
+    "columnas_usadas": {
+      "fecha": "Fecha_Accidente",
+      "direccion": "DIRECCION ACCIDENTE",
+      "actor": "CONDICION_VICTIMA",
+      "cantidad": "CANTIDAD_VICTIMAS"
+    }
+  },
+  "estrategia_validacion": "temporal: entrenamiento 2018-2024, prueba 2025",
+  "definicion_riesgo_alto": "3 o mas victimas en la combinacion via-victima-dia de un anio",
+  "metricas_modelo": {
+    "accuracy": 0.864,
+    "precision": 0.479,
+    "recall": 0.676,
+    "f1": 0.561
+  },
+  "metricas_base_siempre_riesgo_bajo": {
+    "accuracy": 0.871,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+  },
+  "metricas_base_repetir_anio_anterior": {
+    "accuracy": 0.881,
+    "precision": 0.543,
+    "recall": 0.479,
+    "f1": 0.509
+  },
+  "brechas_de_desempeno_detectadas": [
+    "actor 'conductor': recall 0.476 frente a 0.676 general",
+    "via 'calle 80': recall 0.0 frente a 0.676 general",
+    "via 'calle 76': recall 0.2 frente a 0.676 general",
+    "via 'calle 17': recall 0.3 frente a 0.676 general",
+    "via 'calle 84': recall 0.333 frente a 0.676 general",
+    "via 'carrera 6': recall 0.333 frente a 0.676 general",
+    "via 'carrera 8': recall 0.4 frente a 0.676 general"
+  ],
+  "datos_no_usados": "direccion exacta, sexo, edad, gravedad y clase de accidente",
+  "limitaciones": [
+    "Estima riesgo relativo historico, no predice un siniestro individual.",
+    "El conjunto no trae hora ni zona: no hay franja horaria; la via se deriva de la direccion con una regla aproximada.",
+    "Depende de la calidad y cobertura del registro oficial (subregistro posible).",
+    "No incluye volumen de trafico, clima ni estado de la via.",
+    "Resultados por grupo con pocos casos son poco confiables.",
+    "No debe usarse para sancionar personas; solo para orientar prevencion."
+  ]
+}
