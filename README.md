@@ -1,6 +1,6 @@
 # MovilidadIA Barranquilla · Consulta web del modelo de riesgo vial
 
-Aplicación web que permite consultar el modelo de **riesgo vial** desarrollado en la Entrega 2 de Inteligencia Artificial (Universidad Simón Bolívar). Dada una **vía**, un **tipo de víctima** y un **día de la semana**, la página indica si la combinación es de **riesgo alto o bajo**, la probabilidad estimada y **por qué** el modelo llegó a ese resultado.
+Aplicación web que permite consultar el modelo de **riesgo vial**. Dada una **vía**, un **tipo de víctima** y un **día de la semana**, la página indica si la combinación es de **riesgo alto o bajo**, la probabilidad estimada y **por qué** el modelo llegó a ese resultado.
 
 > **Aviso:** es una herramienta de apoyo. Estima riesgo relativo a partir de datos históricos y puede equivocarse. No determina sanciones ni responsabilidades. Toda decisión (operativos, campañas, intervenciones) debe ser validada por una persona.
 
