@@ -58,15 +58,22 @@ function Consulta({ m, onResultado, historial }) {
             <h2>Resultado</h2>
             <p>
               <span className="badge" style={{ background: color(r.prob) }}>{r.clase}</span>
-              &nbsp; Probabilidad de riesgo alto: <b>{pct(r.prob)}</b>
+            </p>
+            <p>
+              Probabilidad de que esta combinación sea de <b>riesgo alto</b>: <b>{pct(r.prob)}</b>
             </p>
             <Barra valor={r.prob} color={color(r.prob)} />
+            <p className="mut">
+              {r.prob >= 0.5
+                ? "Se clasifica como RIESGO ALTO porque la probabilidad es de 50 % o más."
+                : "Se clasifica como RIESGO BAJO porque la probabilidad es menor a 50 %."}
+            </p>
             <h2 style={{ marginTop: 16 }}>¿Por qué?</h2>
             <p className="mut">Efecto de cada variable frente al promedio de sus opciones.</p>
             {r.efectos.map((e) => (
               <Fila key={e.variable} nombre={`${NOMBRES[e.variable]}: ${cap(e.valor)}`} valor={Math.abs(e.efecto)}
                 color={e.efecto > 0 ? "var(--alto)" : "var(--bajo)"}
-                texto={`${e.efecto > 0 ? "+" : "−"}${pct(Math.abs(e.efecto))}`} />
+                texto={Math.round(Math.abs(e.efecto) * 100) === 0 ? "0%" : `${e.efecto > 0 ? "+" : "−"}${pct(Math.abs(e.efecto))}`} />
             ))}
             <p className="mut">Rojo: sube la probabilidad · Verde: la baja.</p>
             <div className="aviso">{AVISO}</div>
