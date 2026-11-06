@@ -187,7 +187,7 @@ export default function App() {
   const [historial, setHistorial] = useState([]);
 
   useEffect(() => {
-    fetch("/modelo_web.json")
+    fetch(`${import.meta.env.BASE_URL}modelo_web.json`)
       .then((r) => { if (!r.ok) throw new Error(); return r.json(); })
       .then(setM)
       .catch(() => setError("No se encontró public/modelo_web.json. Genera el archivo con exportar_modelo.py y cópialo en la carpeta public (ver README)."));
