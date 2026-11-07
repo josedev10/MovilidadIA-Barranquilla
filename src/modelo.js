@@ -3,7 +3,7 @@ export const FEATURES = ["via", "actor", "dia"];
 
 export const AVISO =
   "AVISO: esta es una herramienta de APOYO. Estima riesgo relativo a partir de datos historicos y puede equivocarse. " +
-  "No determina sanciones ni responsabilidades. Toda decision (operativos, campanas, intervenciones) debe ser validada por una persona.";
+  "No determina sanciones ni responsabilidades. Toda decision (operativos, campañas, intervenciones) debe ser validada por una persona.";
 
 export const probAlto = (m, f) => m.tabla[`${f.via}|${f.actor}|${f.dia}`];
 
