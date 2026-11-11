@@ -3,6 +3,7 @@ import { AVISO, ahora, consultar, ranking, registroCSV } from "./modelo.js";
 import Asistente from "./Asistente.jsx";
 import Historial from "./Historial.jsx";
 import { CampoRevisor, Informe, Validacion } from "./Informe.jsx";
+import Ficha from "./Ficha.jsx";
 
 const NOMBRES = { via: "Vía", actor: "Tipo de víctima", dia: "Día" };
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -27,12 +28,13 @@ function Fila({ nombre, valor, color: c, texto, negrita }) {
   );
 }
 
-  function Consulta({ m, onResultado, historial, onValidar, onInforme, revisor, setRevisor }) {
+function Consulta({ m, onResultado, historial, onValidar, onInforme, revisor, setRevisor }) {
   const [sel, setSel] = useState({
     via: m.categorias.via[0],
     actor: m.categorias.actor.includes("motociclista") ? "motociclista" : m.categorias.actor[0],
     dia: "viernes",
-  });
+});
+
   const r = historial[0]?.fila ? historial[0] : null;
   const rk = r ? ranking(m, r.fila.actor, r.fila.dia) : [];
 
@@ -102,69 +104,6 @@ function Fila({ nombre, valor, color: c, texto, negrita }) {
   );
 }
 
-function Tabla({ filas, clave }) {
-  if (!filas?.length) return null;
-  return (
-    <div className="sc">
-      <table>
-        <thead><tr><th>{NOMBRES[clave]}</th><th>Recall</th><th>Precisión</th><th>F1</th><th>Casos altos</th><th>Nota</th></tr></thead>
-        <tbody>
-          {filas.map((f) => (
-            <tr key={f[clave]}><td>{f[clave]}</td><td>{f.recall}</td><td>{f.precision}</td><td>{f.f1}</td>
-              <td>{f.casos_riesgo_alto_reales}</td><td>{f.advertencia}</td></tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function Ficha({ m }) {
-  const f = m.ficha || {};
-  if (!f.nombre) return <div className="card">No hay ficha del modelo en modelo_web.json.</div>;
-  const filaM = (n, x) => x && (
-    <tr><td>{n}</td><td>{x.accuracy}</td><td>{x.precision}</td><td>{x.recall}</td><td>{x.f1}</td></tr>
-  );
-  return (
-    <div className="card">
-      <h2>{f.nombre} · v{f.version}</h2>
-      <p className="mut">Entrenado: {f.fecha_entrenamiento} · Datos: {f.origen_datos} · Validación: {f.estrategia_validacion}</p>
-      <p>{f.definicion_riesgo_alto}. <b>No usa:</b> {f.datos_no_usados}.</p>
-      <h2>Desempeño</h2>
-      <div className="sc">
-        <table>
-          <thead><tr><th></th><th>Accuracy</th><th>Precisión</th><th>Recall</th><th>F1</th></tr></thead>
-          <tbody>
-            {filaM("Modelo", f.metricas_modelo)}
-            {filaM("Base: siempre riesgo bajo", f.metricas_base_siempre_riesgo_bajo)}
-            {filaM("Base: repetir año anterior", f.metricas_base_repetir_anio_anterior)}
-          </tbody>
-        </table>
-      </div>
-      {m.importancia?.length > 0 && (
-        <>
-          <h2 style={{ marginTop: 16 }}>Importancia de variables</h2>
-          {m.importancia.map((i) => (
-            <Fila key={i.variable} nombre={NOMBRES[i.variable] || i.variable} valor={Math.max(0, i.importancia) * 2}
-              color="var(--ac)" texto={i.importancia} />
-          ))}
-        </>
-      )}
-      {f.brechas_de_desempeno_detectadas?.length > 0 && (
-        <>
-          <h2 style={{ marginTop: 16 }}>Brechas detectadas</h2>
-          <ul>{f.brechas_de_desempeno_detectadas.map((b) => <li key={b}>{b}</li>)}</ul>
-        </>
-      )}
-      <h2 style={{ marginTop: 16 }}>Por tipo de víctima</h2>
-      <Tabla filas={m.por_actor} clave="actor" />
-      <h2 style={{ marginTop: 16 }}>Por vía</h2>
-      <Tabla filas={m.por_via} clave="via" />
-      <h2 style={{ marginTop: 16 }}>Limitaciones</h2>
-      <ul>{f.limitaciones?.map((l) => <li key={l}>{l}</li>)}</ul>
-    </div>
-  );
-}
 
 
 
