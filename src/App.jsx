@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AVISO, consultar, ranking, registroCSV } from "./modelo.js";
+import Asistente from "./Asistente.jsx";
 
 const NOMBRES = { via: "Vía", actor: "Tipo de víctima", dia: "Día" };
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -217,6 +218,11 @@ export default function App() {
   const onResultado = (r) =>
     setHistorial((h) => [{ ...r, hora: new Date().toISOString().slice(0, 19), version: m.version }, ...h]);
 
+     const onConsultaBot = (fila) => {
+     onResultado(consultar(m, fila));
+     setTab("q");
+   };
+
   return (
     <>
       <header>
@@ -243,6 +249,7 @@ export default function App() {
         {m && tab === "q" && <Consulta m={m} onResultado={onResultado} historial={historial} />}
         {m && tab === "f" && <Ficha m={m} />}
         {m && tab === "h" && <Historial historial={historial} />}
+        {m && <Asistente m={m} ultima={historial[0]} onConsulta={onConsultaBot} />}
       </main>
     </>
   );
