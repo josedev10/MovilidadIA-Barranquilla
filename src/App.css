@@ -96,3 +96,17 @@ button.tema:hover{border-color:var(--ac)}
 details{margin-top:10px}
 summary{cursor:pointer;color:var(--ac);font-size:.9rem}
 .recharts-wrapper,.recharts-surface{outline:none}
+
+/* Ajustes para celular */
+@media (max-width:600px){
+  header{padding:14px 12px 6px}
+  h1{font-size:1.25rem}
+  nav{padding:0 12px}
+  nav button{padding:7px 11px;font-size:.9rem}
+  main{padding:0 8px 90px}
+  .card{padding:12px;border-radius:10px}
+  .row .n{width:110px}
+  th,td{padding:5px 6px}
+  .bot-fab{right:12px;bottom:12px}
+  .bot-panel{right:8px;left:8px;width:auto;bottom:66px}
+}
