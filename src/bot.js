@@ -11,7 +11,7 @@ const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 export const BIENVENIDA = {
   texto:
-    "¡Hola! Soy el asistente de la página. No soy una IA generativa: respondo con los datos del modelo de riesgo vial. " +
+    "¡Hola! Soy el asistente de MovilidadIA Barranquilla. No soy una IA generativa: respondo con los datos del modelo de riesgo vial. " +
     "Puedes preguntarme cosas o escribir una consulta, por ejemplo «motociclista en calle 70 el viernes».",
   sugerencias: ["¿Cómo uso la página?", "¿Qué significa riesgo alto?", "¿Qué vías son más riesgosas?", "¿Qué tan confiable es el modelo?"],
 };
