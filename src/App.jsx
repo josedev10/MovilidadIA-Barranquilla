@@ -193,6 +193,20 @@ export default function App() {
   const [tab, setTab] = useState("q");
   const [historial, setHistorial] = useState([]);
 
+  const [tema, setTema] = useState(() => {
+      
+    try {
+        const guardado = localStorage.getItem("tema");
+        if (guardado) return guardado;
+      } catch {}
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    });
+
+    useEffect(() => {
+      document.documentElement.setAttribute("data-theme", tema);
+      try { localStorage.setItem("tema", tema); } catch {}
+    }, [tema]);
+
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}modelo_web.json`)
       .then((r) => { if (!r.ok) throw new Error(); return r.json(); })
@@ -206,8 +220,17 @@ export default function App() {
   return (
     <>
       <header>
-        <h1>MovilidadIA Barranquilla</h1>
-        <p>Consulta el modelo de riesgo vial (Random Forest) con explicación de cada resultado.</p>
+        <div>
+          <h1>MovilidadIA Barranquilla</h1>
+          <p>Consulta el modelo de riesgo vial (Random Forest) con explicación de cada resultado.</p>
+        </div>
+        <button
+          className="tema"
+          onClick={() => setTema(tema === "dark" ? "light" : "dark")}
+          aria-label="Cambiar entre modo claro y oscuro"
+        >
+          {tema === "dark" ? "☀️ Claro" : "🌙 Oscuro"}
+        </button>
       </header>
       <nav>
         {[["q", "Consulta"], ["f", "Ficha del modelo"], ["h", "Historial"]].map(([k, t]) => (
