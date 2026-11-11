@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { AVISO, consultar, ranking, registroCSV } from "./modelo.js";
+import { AVISO, ahora, consultar, ranking, registroCSV } from "./modelo.js";
 import Asistente from "./Asistente.jsx";
+import Historial from "./Historial.jsx";
+import { CampoRevisor, Informe, Validacion } from "./Informe.jsx";
 
 const NOMBRES = { via: "Vía", actor: "Tipo de víctima", dia: "Día" };
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -25,7 +27,7 @@ function Fila({ nombre, valor, color: c, texto, negrita }) {
   );
 }
 
-function Consulta({ m, onResultado, historial }) {
+  function Consulta({ m, onResultado, historial, onValidar, onInforme, revisor, setRevisor }) {
   const [sel, setSel] = useState({
     via: m.categorias.via[0],
     actor: m.categorias.actor.includes("motociclista") ? "motociclista" : m.categorias.actor[0],
@@ -78,6 +80,13 @@ function Consulta({ m, onResultado, historial }) {
             ))}
             <p className="mut">Rojo: sube la probabilidad · Verde: la baja.</p>
             <div className="aviso">{AVISO}</div>
+              
+              <div className="acciones">
+                <CampoRevisor revisor={revisor} onChange={setRevisor} />
+                <Validacion item={r} onValidar={onValidar} />
+                <button className="sec" onClick={() => onInforme(r)}>🖨️ Informe / PDF</button>
+              </div>
+
           </div>
           <div className="card">
             <h2>Comparación: todas las vías</h2>
@@ -157,42 +166,37 @@ function Ficha({ m }) {
   );
 }
 
-function Historial({ historial }) {
-  const descargar = () => {
-    const url = URL.createObjectURL(new Blob([registroCSV(historial)], { type: "text/csv" }));
-    const a = Object.assign(document.createElement("a"), { href: url, download: "registro_decisiones.csv" });
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-  return (
-    <div className="card">
-      <h2>Consultas de esta sesión</h2>
-      {historial.length === 0 ? <p className="mut">Aún no hay consultas.</p> : (
-        <>
-          <div className="sc">
-            <table>
-              <thead><tr><th>Hora</th><th>Vía</th><th>Víctima</th><th>Día</th><th>Prob.</th><th>Clase</th></tr></thead>
-              <tbody>
-                {historial.map((h, i) => (
-                  <tr key={i}><td>{h.hora}</td><td>{h.fila.via}</td><td>{h.fila.actor}</td><td>{h.fila.dia}</td>
-                    <td>{pct(h.prob)}</td><td>{h.clase}</td></tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <button className="go" onClick={descargar}>Descargar registro_decisiones.csv</button>
-        </>
-      )}
-      <p className="mut">El CSV deja la validación humana como «pendiente» para cada consulta.</p>
-    </div>
-  );
-}
+
 
 export default function App() {
   const [m, setM] = useState(null);
   const [error, setError] = useState("");
   const [tab, setTab] = useState("q");
   const [historial, setHistorial] = useState([]);
+
+  const [informe, setInforme] = useState(null);
+
+    useEffect(() => {
+        if (!informe) return;
+        const titulo = document.title;
+        const f = informe.fila;
+        document.title = `Informe riesgo vial - ${f.via} - ${f.actor} - ${f.dia}`;
+        const t = setTimeout(() => window.print(), 100);
+        const limpiar = () => setInforme(null);
+        window.addEventListener("afterprint", limpiar);
+        return () => {
+          clearTimeout(t);
+          window.removeEventListener("afterprint", limpiar);
+          document.title = titulo;
+        };
+      }, [informe]);
+
+    const [revisor, setRevisor] = useState(() => {
+     try { return localStorage.getItem("revisor") || ""; } catch { return ""; }
+   });
+   useEffect(() => {
+     try { localStorage.setItem("revisor", revisor); } catch {}
+   }, [revisor]);
 
   const [tema, setTema] = useState(() => {
       
@@ -216,12 +220,24 @@ export default function App() {
   }, []);
 
   const onResultado = (r) =>
-    setHistorial((h) => [{ ...r, hora: new Date().toISOString().slice(0, 19), version: m.version }, ...h]);
+     setHistorial((h) => [
+       { ...r, id: Date.now() + Math.random(), hora: ahora(), version: m.version, validacion: "pendiente", validadoEn: null },
+       ...h,
+     ]);
 
-     const onConsultaBot = (fila) => {
-     onResultado(consultar(m, fila));
-     setTab("q");
-   };
+  const validar = (id, estado) =>
+     setHistorial((h) =>
+       h.map((x) =>
+         x.id === id
+           ? { ...x, validacion: estado, revisor: estado === "pendiente" ? "" : revisor.trim(), validadoEn: estado === "pendiente" ? null : ahora() }
+           : x
+       )
+  );
+
+  const onConsultaBot = (fila) => {
+    onResultado(consultar(m, fila));
+    setTab("q");
+  };
 
   return (
     <>
@@ -246,11 +262,12 @@ export default function App() {
       <main>
         {error && <div className="card err">{error}</div>}
         {!m && !error && <div className="card">Cargando modelo…</div>}
-        {m && tab === "q" && <Consulta m={m} onResultado={onResultado} historial={historial} />}
+        {m && tab === "q" && <Consulta m={m} onResultado={onResultado} historial={historial} onValidar={validar} onInforme={setInforme} revisor={revisor} setRevisor={setRevisor} />}
         {m && tab === "f" && <Ficha m={m} />}
-        {m && tab === "h" && <Historial historial={historial} />}
+        {m && tab === "h" && <Historial historial={historial} onValidar={validar} onInforme={setInforme} revisor={revisor} setRevisor={setRevisor} />}
         {m && <Asistente m={m} ultima={historial[0]} onConsulta={onConsultaBot} />}
-      </main>
+        </main>
+        {informe && <Informe m={m} item={informe} />}
     </>
   );
 }

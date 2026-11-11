@@ -45,3 +45,50 @@ button.tema:hover{border-color:var(--ac)}
 .bot-in{display:flex;gap:6px;padding:10px 12px;border-top:1px solid var(--bd)}
 .bot-in input{flex:1;min-width:0;padding:8px 10px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font:inherit}
 .bot-in button{border:0;background:var(--ac);color:#fff;border-radius:8px;padding:0 14px;font:inherit;cursor:pointer}
+
+
+/* Validación humana */
+.valid{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap}
+.valid button,button.sec{border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:8px;padding:5px 10px;font:inherit;font-size:.82rem;cursor:pointer}
+.valid .ok{border-color:var(--bajo);color:var(--bajo)}
+.valid .no{border-color:var(--alto);color:var(--alto)}
+.estado{padding:3px 10px;border-radius:99px;color:#fff;font-size:.8rem;font-weight:600}
+.estado.aprobada{background:var(--bajo)}
+.estado.rechazada{background:var(--alto)}
+.acciones{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+
+/* Informe imprimible: oculto en pantalla, único elemento visible al imprimir */
+.informe{display:none}
+@page{size:A4;margin:14mm}
+@media print{
+  #root>*:not(.informe){display:none!important}
+  html,body{background:#fff!important}
+  .informe{display:block;color:#111;background:#fff;font-family:system-ui,"Segoe UI",Roboto,sans-serif;font-size:10.5pt;line-height:1.4;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .informe h1{font-size:16pt;margin:0 0 2pt}
+  .informe h2{font-size:11.5pt;margin:12pt 0 4pt;border-bottom:1px solid #ccc;padding-bottom:2pt;break-after:avoid}
+  .informe p{margin:3pt 0}
+  .informe ul{margin:4pt 0;padding-left:16pt}
+  .inf-meta,.inf-nota{color:#555;font-size:9pt}
+  .inf-t{width:100%;border-collapse:collapse;margin:8pt 0}
+  .inf-t th,.inf-t td{border:1px solid #ccc;padding:5pt 8pt;text-align:left;font-size:10pt}
+  .inf-t th{background:#f0f2f5;width:1%;white-space:nowrap}
+  .inf-res{border:2px solid;border-radius:6pt;padding:8pt 10pt;margin:6pt 0;break-inside:avoid}
+  .inf-fila{display:flex;align-items:center;gap:8pt;margin:3pt 0;break-inside:avoid}
+  .inf-n{width:150pt;flex:none}
+  .inf-barra{flex:1;height:8pt;background:#e3e7ec;border-radius:4pt;overflow:hidden}
+  .inf-barra i{display:block;height:100%}
+  .inf-v{width:36pt;text-align:right;flex:none}
+  .inf-firma{display:flex;justify-content:space-between;gap:12pt;margin-top:18pt}
+  .inf-aviso{background:#fff4d6;border:1px solid #e6d28a;border-radius:4pt;padding:6pt 8pt;font-size:9.5pt}
+}
+
+
+/* Campo "Revisado por" */
+.campo-revisor{display:block;min-width:240px;flex:1;margin:8px 0}
+.campo-revisor input{width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font:inherit}
+@media print{
+  .inf-firma{align-items:flex-end}
+  .inf-linea{display:inline-block;min-width:200pt;border-bottom:1px solid #444;padding:0 4pt;font-weight:600}
+  .inf-linea.corta{min-width:80pt}
+}
