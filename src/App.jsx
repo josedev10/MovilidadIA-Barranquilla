@@ -73,6 +73,15 @@ function Consulta({ m, onResultado, historial, onValidar, onInforme, revisor, se
                 ? "Se clasifica como RIESGO ALTO porque la probabilidad es de 50 % o más."
                 : "Se clasifica como RIESGO BAJO porque la probabilidad es menor a 50 %."}
             </p>
+
+            <div className="nota-info">
+              <span className="nota-icono" aria-hidden="true">i</span>
+              <span>
+                Esto no es la probabilidad de que ocurra un accidente. Indica qué tan probable es que esta combinación
+                esté entre las de mayor riesgo según los datos.
+              </span>
+            </div>
+            
             <h2 style={{ marginTop: 16 }}>¿Por qué?</h2>
             <p className="mut">Efecto de cada variable frente al promedio de sus opciones.</p>
             {r.efectos.map((e) => (

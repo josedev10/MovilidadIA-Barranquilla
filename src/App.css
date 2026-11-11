@@ -81,6 +81,8 @@ button.tema:hover{border-color:var(--ac)}
   .inf-v{width:36pt;text-align:right;flex:none}
   .inf-firma{display:flex;justify-content:space-between;gap:12pt;margin-top:18pt}
   .inf-aviso{background:#fff4d6;border:1px solid #e6d28a;border-radius:4pt;padding:6pt 8pt;font-size:9.5pt}
+  .inf-info{display:flex;gap:6pt;align-items:flex-start;margin-top:6pt;padding:4pt 6pt;border:1px solid #ccd3da;border-left:3px solid #0b5fa5;border-radius:4pt;font-size:8.5pt;color:#444}
+  .inf-i{flex:none;width:11pt;height:11pt;border-radius:50%;background:#0b5fa5;color:#fff;font:italic 700 8pt Georgia,serif;display:inline-flex;align-items:center;justify-content:center}
 }
 
 
@@ -110,3 +112,6 @@ summary{cursor:pointer;color:var(--ac);font-size:.9rem}
   .bot-fab{right:12px;bottom:12px}
   .bot-panel{right:8px;left:8px;width:auto;bottom:66px}
 }
+
+.nota-info{display:flex;gap:8px;align-items:flex-start;margin-top:10px;padding:8px 10px;border:1px solid var(--bd);border-left:3px solid var(--ac);background:var(--bg);border-radius:8px;font-size:.78rem;color:var(--mut);line-height:1.4}
+.nota-icono{flex:none;width:16px;height:16px;border-radius:50%;background:var(--ac);color:#fff;font-weight:700;font-size:.7rem;display:inline-flex;align-items:center;justify-content:center;font-style:italic;font-family:Georgia,serif;margin-top:1px}

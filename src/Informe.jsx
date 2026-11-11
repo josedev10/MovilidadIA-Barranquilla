@@ -64,6 +64,13 @@ export function Informe({ m, item }) {
         <div className="inf-nota">
           Riesgo alto = {m.umbral} o más víctimas en esa combinación en un año. Se clasifica como alto con probabilidad de 50 % o más.
         </div>
+        <div className="inf-info">
+          <span className="inf-i">i</span>
+          <span>
+            Esto no es la probabilidad de que ocurra un accidente. Indica qué tan probable es que esta combinación
+            esté entre las de mayor riesgo según los datos.
+          </span>
+        </div>
       </div>
 
       <h2>¿Por qué?</h2>
